@@ -1,2 +1,2 @@
-# SentitalApp
+# SentinalApp
 Project Sentinal App
