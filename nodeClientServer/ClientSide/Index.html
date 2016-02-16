@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="sentinalApp">
+
+<head>
+    <!-- meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="web app">
+    <meta name="author" content="Aviad Shua">
+    <title>Index Page</title>
+    <!-- link tags -->
+    <link rel="shortcut icon" type="image/ico" href="http://www.macupdate.com/images/icons256/51588.png" />
+    <link rel="import" href="http://localhost:3000/common/projectSrc.html" />
+</head>
+
+<body>
+    <div class="container" ng-view>
+        
+    </div>
+    <div ng-include="'./dashboard/dashboardViews/dashboardView.html'"></div>
+    <!-- script tags -->
+    <script src="./login/loginService.js"></script>
+    <script src="./login/loginDir.js"></script>
+    <script src="./registration/registrationService.js"></script>
+    <script src="./registration/registrationDir.js"></script>
+</body>
+
+</html>
