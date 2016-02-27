@@ -3,27 +3,12 @@ var bodyParser = require('body-parser');//let me read body of http message.
 var User = require('./user')//login user object.
 var Firebase = require('firebase');// firebase DB.
 var http = require('http');//for making http req.
-var email   = require("email");//for sening emails.
 
-var server  = email.server.connect({
-   user:    "aviad_ssj2", 
-   password:"1181988", 
-   host:    "smtp.outlook.com", 
-   ssl:     true
-});
 var app = express();
 var rootRef = new Firebase('https://burning-heat-1811.firebaseio.com/');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-server.send({
-   text:    "i hope this works", 
-   from:    "Sentinal@firebase.com", 
-   to:      "aviadgawl@gmail.com",
-   cc:      "",
-   subject: "testing emailjs"
-}, function(err, message) { console.log(err || message); });
 
 //for alwoing cross origin requests.
 app.use(function (req, res, next) {
