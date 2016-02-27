@@ -3,6 +3,8 @@ var bodyParser = require('body-parser');//let me read body of http message.
 var User = require('./user')//login user object.
 var Firebase = require('firebase');// firebase DB.
 var http = require('http');//for making http req.
+var smtpSettings = require('./fixtures/smtp_settings.json');
+var emailjs = require('emailjs');
 
 var app = express();
 var rootRef = new Firebase('https://burning-heat-1811.firebaseio.com/');
@@ -95,6 +97,24 @@ function createNewProfile(userProfileParam) {
 }
 
 //=============================================  Server REST Functions ====================================================
+
+app.post('/snapshot', function (req, res) {
+  var smtp = emailjs(smtpSettings).send({
+    subject : 'Here is your snapshot',
+    text : 'Bla blabla',
+    from : 'Aviad <aviadgawl@gmail.com>',
+    to : 'Someone <someone@someone.com>',
+    attachment : [
+      {
+        path: req.image.path,
+        type: req.image.type,
+        name: req.image.name
+      }
+    ]
+  }, function (e,r) {
+    console.log(e||r);
+  });
+});
 
 // example: get method.
 app.get('/', function (req, res) {
