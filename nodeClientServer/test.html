@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+	<head>
+		<script type="text/javascript" src="C:\Users\aviadgawl\Desktop\SentinalApp\nodeClientServer\ClientSide\common\bower_components\jquery\dist\jquery.min.js"></script>
+		<script type="text/javascript">
+			function makeObject() {
+				var o = [];
+				$('#shitform .repository').each(function (i, e) {
+					e = $(e);
+					var repo = {
+						serverName : e.data('repo-name'),
+						apis : []
+					};
+					
+					$('.repo-function:checked', e).each(function (i, rfun) {
+						rfun = $(rfun);
+						repo.apis.push({
+							url : rfun.data('func-url')
+						});
+					});
+					
+					o.push(repo);
+				});
+				
+				return o;
+			}
+		</script>
+	</head>
+	
+<body>
+	<form id="shitform" action="/blabla">
+		<div class="repository" data-repo-name="user">
+			<label>google <input type="checkbox" class="repo-function" data-func-url="http://google.com" /></label>
+			<label>yahoo <input type="checkbox" class="repo-function" data-func-url="http://yahoo.com" /></label>
+		</div>
+		<div class="repository" data-repo-name="student">
+			<label>google <input type="checkbox" class="repo-function" data-func-url="http://google.com" /></label>
+			<label>yahoo <input type="checkbox" class="repo-function" data-func-url="http://yahoo.com" /></label>
+		</div>
+	</form>
+</body>
+</html>

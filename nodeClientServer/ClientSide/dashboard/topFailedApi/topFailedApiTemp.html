@@ -1,0 +1,42 @@
+<!-- top failed api html templete -->
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <form>
+        <h2>Server Name</h2>
+        <div ng-repeat="item in data">
+            <label>{{item.serverName}}</label>
+            <input ng-click="createApisSelect(item.serverName)" type="checkbox" value="{{item.serverName}}">
+        </div>
+        <div ng-repeat="service in serviceToDisp">
+            <h3>{{service.serverName}} Apis</h3>
+            <div ng-repeat="apiName in service.apis">
+                <label>{{apiName}}</label>
+                <input ng-click="addApisToQuary()" type="checkbox" value="{{apiName}}">
+            </div>
+        </div>
+        <div class="form-group">
+            <h2 for="duration">Duration</h2>
+            <input max="5" ng-model="quary.duration" type="number" placeholder="Duration" class="form-control">
+        </div>
+        <div class="from-group">
+            <h2 for="top">Top failed number</h2>
+            <input max="10" ng-model="quary.top" type="number" placeholder="Top apis" class="form-control">
+        </div>
+        <div>
+            <input ng-click="getChartData()" type="button" name="getData" value="Get Chart">
+        </div>
+    </form>
+    <table>
+        <tr>
+            <td>
+                <div id="mainFailedChartHeader">
+
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <canvas id="mainFailedChartCanvas" height="400" width="700"></canvas>
+            </td>
+        </tr>
+    </table>
+</div>

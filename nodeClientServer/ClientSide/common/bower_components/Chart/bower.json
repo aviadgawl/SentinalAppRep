@@ -1,0 +1,30 @@
+{
+  "name": "Chart",
+  "description": "forked Chart.js",
+  "version": "1.0.0",
+  "keywords": [
+    "chart"
+  ],
+  "main": "Chart.js",
+  "scripts": ["Chart.js"],
+  "ignore": [
+    "**/*.txt"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com:zazagag/chart.git"
+  },
+  "author": {
+    "name": "zazagag",
+    "email": "zazagag@gmail.com",
+    "url": "http://zazagag.com"
+  },
+  "licenses": [
+    {
+      "type": "GPL3"
+    },
+    {
+      "type": "MIT"
+    }
+  ]
+}

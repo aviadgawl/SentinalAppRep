@@ -1,0 +1,42 @@
+{
+  "name": "Chart",
+  "description": "forked Chart.js",
+  "keywords": [
+    "chart"
+  ],
+  "main": "Chart.js",
+  "scripts": [
+    "Chart.js"
+  ],
+  "ignore": [
+    "**/*.txt"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com:zazagag/chart.git"
+  },
+  "author": {
+    "name": "zazagag",
+    "email": "zazagag@gmail.com",
+    "url": "http://zazagag.com"
+  },
+  "licenses": [
+    {
+      "type": "GPL3"
+    },
+    {
+      "type": "MIT"
+    }
+  ],
+  "homepage": "https://github.com/zazagag/chart",
+  "_release": "78d1d5b1c4",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "78d1d5b1c4be2c51f361090f54ba1cde3d49dc42"
+  },
+  "_source": "git://github.com/zazagag/chart.git",
+  "_target": "*",
+  "_originalSource": "chart",
+  "_direct": true
+}

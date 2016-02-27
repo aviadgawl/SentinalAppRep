@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+        <div class="card hovercard">
+            <div class="cardheader">
+
+            </div>
+            <div class="avatar">
+                <img alt="" src="http://lorempixel.com/100/100/people/9/">
+            </div>
+            <div class="info">
+                <div class="title">
+                    <a target="_blank" href="http://scripteden.com/">Profile Page</a>
+                </div>
+                <div class="desc">Email: {{onlineUser.userEmail}}</div>
+                <div class="desc">Name: {{onlineUser.userName}}</div>
+                <div class="desc">Theme Color:</div>
+                <div class="desc"><input ng-model="oldPassword" type="password"  placeholder="old password"></div>
+                <div class="desc"> <input ng-model="newPassword" type="password"  placeholder="new password"></div>
+                <div class="desc"><input ng-click="changePassword()" type="button" value="Change"></div>
+            </div>
+            <div class="bottom">
+                <a class="btn btn-primary btn-twitter btn-sm btnprofile" href="https://twitter.com/webmaniac">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a class="btn btn-danger btn-sm btnprofile" rel="publisher" href="https://plus.google.com/">
+                    <i class="fa fa-google-plus"></i>
+                </a>
+                <a class="btn btn-primary btn-sm btnprofile" rel="publisher" href="https://facebook.com/">
+                    <i class="fa fa-facebook"></i>
+                </a>
+                <a class="btn btn-warning btn-sm btnprofile" rel="publisher" href="https://behance.com/">
+                    <i class="fa fa-behance"></i>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</div>

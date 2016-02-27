@@ -2,15 +2,16 @@
 ///<refernce path="./loginObjs.js"/>
 ///<refernce path="./login/loginService.js"/>
 
-sentinalApp.directive('login', function (loginService) {
-    return { 
+sentinalApp.directive('login', function (loginService, localStorageService) {
+    return {
         restrict: 'EA',
+        controller: 'mainCtrl',
         link: function (scope) {
             var self = scope;
             self.onlineUser = new User();
-            
+            self.onlineUser.isLogged = localStorageService.isAuth(self.globalClientKey);
             self.keepLoggedIn = false;
-            
+
             self.login = function () {
 
                 var isEmailValid = emailValidation(self.onlineUser.userEmail);
@@ -20,14 +21,29 @@ sentinalApp.directive('login', function (loginService) {
 
                         if (res) {
                             self.onlineUser.isLogged = true;
+                            //self.globalClientKey = self.onlineUser.userEmail;
+                            localStorageService.add(self.globalClientKey, res.data);
+                            
                             console.log(res)
                         }
                         else {
                             alert('Login failed!')
                         }
+                    }, function (error) {
+                        alert('server error: ' + error.data + " | " + error.status);
                     });
                 }
-            }// end of controller login function.
+            }// end of login function.
+             
+             self.resetPassword = function(){
+                 
+                 if(self.onlineUser.userEmail){
+                 loginService.resetPassword(self.onlineUser).then(function(res){alert(res.data) } , function(error){ alert(error.data)} )
+                 }
+                 else{
+                     alert('Enter user email');
+                 }
+             }//end of resert password.
              
             self.loginFacebook = function () {
                 loginService.loginFacebook(function (error, authData) {
@@ -36,10 +52,13 @@ sentinalApp.directive('login', function (loginService) {
                             console.log("Login Failed!", error);
                         } else {
                             console.log("Authenticated successfully with payload:", authData);
-                             self.onlineUser.userToken = authData.token;
-                            
-                            loginService.verifyToken(self.onlineUser).then(function(res){
-                               self.onlineUser.isLogged = res;
+                            self.onlineUser.userToken = authData.token;
+
+                            loginService.verifyToken(self.onlineUser).then(function (res) {
+                                localStorageService.add(self.globalClientKey, authData.token);
+                                location.reload();
+                            }, function (error) {
+                                alert('server error: ' + error.data + " | " + error.status);
                             });
                         }
                     });//end of apply.
@@ -54,10 +73,13 @@ sentinalApp.directive('login', function (loginService) {
                             console.log("Login Failed!", error);
                         } else {
                             console.log("Authenticated successfully with payload:", authData);
-                             self.onlineUser.userToken = authData.token;
-                            
-                            loginService.verifyToken(self.onlineUser).then(function(res){
-                               self.onlineUser.isLogged = res;
+                            self.onlineUser.userToken = authData.token;
+
+                            loginService.verifyToken(self.onlineUser).then(function (res) {
+                                localStorageService.add(self.globalClientKey, authData.token);
+                                location.reload();
+                            }, function (error) {
+                                alert('server error: ' + error.data + " | " + error.status);
                             });
                         }
                     });//end of apply.
@@ -71,10 +93,13 @@ sentinalApp.directive('login', function (loginService) {
                             console.log("Login Failed!", error);
                         } else {
                             console.log("Authenticated successfully with payload:", authData);
-                             self.onlineUser.userToken = authData.token;
-                            
-                            loginService.verifyToken(self.onlineUser).then(function(res){
-                               self.onlineUser.isLogged = res;
+                            self.onlineUser.userToken = authData.token;
+
+                            loginService.verifyToken(self.onlineUser).then(function (res) {
+                                localStorageService.add(self.globalClientKey, authData.token);
+                                location.reload();
+                            }, function (error) {
+                                alert('server error: ' + error.data + " | " + error.status);
                             });
                         }
                     });//end of apply.
@@ -87,14 +112,17 @@ sentinalApp.directive('login', function (loginService) {
                         if (error) {
                             console.log("Login Failed!", error);
                         } else {
-                            
+
                             console.log("Authenticated successfully with payload:", authData);
                             self.onlineUser.userToken = authData.token;
                             
-                            loginService.verifyToken(self.onlineUser).then(function(res){
-                               self.onlineUser.isLogged = res;
+                            loginService.verifyToken(self.onlineUser).then(function (res) {
+                                localStorageService.add(self.globalClientKey, authData.token);
+                                location.reload();
+                            }, function (error) {
+                                alert('server error: ' + error.data + " | " + error.status);
                             });
-                            
+
                         }
                     });//end of apply.
                 });
@@ -104,6 +132,7 @@ sentinalApp.directive('login', function (loginService) {
                 self.onlineUser.isLogged = false;
                 self.onlineUser.userEmail = '';
                 self.onlineUser.userPassword = '';
+                localStorageService.remove(self.globalClientKey);
             }//end of logout.
             
         },// end of link.

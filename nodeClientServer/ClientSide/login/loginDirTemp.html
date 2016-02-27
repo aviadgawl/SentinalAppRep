@@ -1,7 +1,6 @@
 <!-- simple login template -->
 
 <a ng-show="onlineUser.isLogged" ng-click="logout()"><b>Login Out</b></a>
-
 <a ng-show="!onlineUser.isLogged" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
 <ul ng-show="!onlineUser.isLogged" id="login-dp" class="dropdown-menu">
     <li>
@@ -9,12 +8,28 @@
             <div class="col-md-12">
                 Login via
                 <div class="social-buttons">
-                    <a ng-click="loginFacebook()" class="btn btn-social btn-facebook"><span class="fa fa-facebook"></span> Facebook</a>
-                    <a ng-click="loginTwitter()" class="btn btn-social btn-twitter"><span class="fa fa-twitter"></span> Twitter</a>
+                    <table>
+                        <tr>
+                            <td>
+                                <a ng-click="loginFacebook()" class="btn btn-social btn-facebook"><span class="fa fa-facebook"></span> Facebook</a>
+                            </td>
+                            <td>
+                                <a ng-click="loginTwitter()" class="btn btn-social btn-twitter disabled"><span class="fa fa-twitter"></span> Twitter</a>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-                 <div class="social-buttons">
-                    <a ng-click="loginGoogle()" class="btn btn-social btn-google-plus"><span class="fa fa-google-plus"></span> Google+</a>
-                    <a ng-click="loginGithub()" class="btn btn-social btn-github"><span class="fa fa-github"></span> GitHub</a>
+                <div class="social-buttons">
+                    <table>
+                        <tr>
+                            <td>
+                                <a ng-click="loginGoogle()" class="btn btn-social btn-google-plus"><span class="fa fa-google-plus"></span> Google+</a>
+                            </td>
+                            <td>
+                                <a ng-click="loginGithub()" class="btn btn-social btn-github"><span class="fa fa-github"></span> GitHub</a>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 or
                 <form class="form" role="form" accept-charset="UTF-8" id="login-nav">
@@ -27,7 +42,7 @@
                         <label class="sr-only" for="exampleInputPassword2">Password</label>
                         <input ng-model="onlineUser.userPassword" type="password" class="form-control" id="exampleInputPassword2" placeholder="Password"
                         required>
-                        <div class="help-block text-right"><a href="">Forget the password ?</a></div>
+                        <div class="help-block text-right"><a ng-click="resetPassword()" href="">Forget the password ?</a></div>
                     </div>
                     <div class="form-group">
                         <button ng-click="login()" type="submit" class="btn btn-primary btn-block">Sign in</button>

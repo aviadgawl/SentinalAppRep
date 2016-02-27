@@ -1,6 +1,6 @@
-<div>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
+<div >
+    <nav class="navbar navbar-inverse navbar-fixed-top" >
+        <div class="container-fluid" style="background-color:{{onlineUser.userThemeColor}}">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
                 aria-controls="navbar">
@@ -9,13 +9,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" id="sidebarToggle">Sentinal</a>
+                <a class="navbar-brand margin" id="sidebarToggle">Sentinal</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown" login></li>
                     <li><a href="#profile">Profile</a></li>
                     <li><a href="#help">Help</a></li>
+                    <li class="divider visible-xs"></li>
+                    <li class="visible-xs" ><a href="#overreview" onclick="changeToActive('overreview')">Virtual Machines <span class="sr-only">(current)</span></a></li>
+                    <li class="visible-xs" ><a href="#topFaildApi" onclick="changeToActive('topFaildApi')">Top Faild Api</a></li>
+                    <li class="visible-xs" ><a href="#responceMatric" onclick="changeToActive('responceMatric')">Responce Matric</a></li>
+                    <li class="visible-xs" ><a href="#snapShot" onclick="changeToActive('snapShot')">SnapShot</a></li>
                 </ul>
             </div>
         </div>
@@ -24,17 +29,17 @@
     <div class="container-fluid">
         <div class="row">
             <div id="navSideBar" class="col-sm-3 col-md-2 sidebar">
-                <ul  class="nav nav-sidebar">
-                    <li class="active"><a href="#overreview">Overview <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Reports</a></li>
-                    <li><a href="#">Analytics</a></li>
-                    <li><a href="#">Export</a></li>
+                <ul class="nav nav-sidebar">
+                    <li id="overreviewBtn"><a href="#overreview" onclick="changeToActive('overreview')">Virtual Machines <span class="sr-only">(current)</span></a></li>
+                    <li id="topFaildApiBtn"><a href="#topFaildApi" onclick="changeToActive('topFaildApi')">Top Faild Api</a></li>
+                    <li id="responceMatricBtn"><a href="#responceMatric" onclick="changeToActive('responceMatric')">Responce Matric</a></li>
+                    <li id="snapShotBtn"><a href="#snapShot" onclick="changeToActive('snapShot')">SnapShot</a></li>
                 </ul>
             </div>
-          
 
-              
-            </div>
+
+
         </div>
     </div>
+</div>
 </div>

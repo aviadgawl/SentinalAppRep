@@ -11,19 +11,28 @@
     <title>Index Page</title>
     <!-- link tags -->
     <link rel="shortcut icon" type="image/ico" href="http://www.macupdate.com/images/icons256/51588.png" />
-    <link rel="import" href="http://localhost:3000/common/projectSrc.html" />
+    <link rel="import" href="./common/projectSrc.html" />
+    <link rel="stylesheet" href="./dashboard/responceMatric/responceMatric.css">
+    <link rel="stylesheet" href="./profile/profile.css">
+    <link rel="stylesheet" href="./dashboard/dashboard.css">
 </head>
 
 <body>
-    <div class="container" ng-view>
-        
-    </div>
-    <div ng-include="'./dashboard/dashboardViews/dashboardView.html'"></div>
-    <!-- script tags -->
+    <dashboard></dashboard>
+    
+    <div class="container" ng-view></div>
+    <!-- project dirrective scripts -->
     <script src="./login/loginService.js"></script>
     <script src="./login/loginDir.js"></script>
     <script src="./registration/registrationService.js"></script>
     <script src="./registration/registrationDir.js"></script>
+    <script src="./dashboard/responceMatric/responceMatricService.js"></script>
+    <script src="./dashboard/responceMatric/responceMatricDir.js"></script>
+    <script src="./profile/profileService.js"></script>
+    <script src="./profile/profileDir.js"></script>
+    <script src='./dashboard/dashboardDir.js'></script>
+    <script src="./dashboard/topFailedApi/topFailedApiService.js"> </script>
+    <script src="./dashboard/topFailedApi/topFailedApiDir.js"></script>
 </body>
 
 </html>

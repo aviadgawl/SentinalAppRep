@@ -1,1 +1,13 @@
 runinng server with auto refreshing nodemon bin/www ;
+
+
+iv started drwaing the responce matric charts. and started to cupsolized them in objects.
+
+bugs:
+the charts get drawed on top each other.
+topFailedapi direactive get the info now just need to draw it.
+things to do:
+
+add filters.
+fix git hub.
+draw profile.

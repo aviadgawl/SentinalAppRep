@@ -5,22 +5,24 @@ sentinalApp.directive('registration', function (registrationService) {
             var self = scope;
             self.regUser = new User();
             
-            scope.registrate = function () {
+            self.registrate = function () {
                 
-                var isEmailValid = emailValidation(scope.regUser.userEmail);
-                var isPasswordValid = passwordValidation(scope.regUser.userPassword);
+                var isEmailValid = emailValidation(self.regUser.userEmail);
+                var isPasswordValid = passwordValidation(self.regUser.userPassword);
+                var isFull = self.regUser.userName != null && self.regUser.userThemeColor != null;
+                if (isEmailValid && isPasswordValid && isFull) {//if email and password are valid
                     
-                if (isEmailValid && isPasswordValid) {//if email and password are valid
-
                     registrationService.registrate(self.regUser).then(function (res) {
-                        if(res){ alert(res)}
-                        else{ alert('res is null')}
+                        if(res.flag){ alert(res.flag)}
+                        else{ alert(res.message)}
                         
+                    } , function(error){
+                         alert('server error: ' + error.data + " | " + error.status);
                     });//end of registrationService.registrate
                     
                 }
                 else{//if email and password are not valid.
-                    alert('not valid password or email');
+                    alert('not valid password or email or missing info');
                 }//end of validations if.
 
             }// end of controller login function.

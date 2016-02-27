@@ -114,3 +114,7 @@ body {
   display: inline-block;
   border-radius: 50%;
 }
+
+.margin{
+    margin-left: 20px !important;
+}

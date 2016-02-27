@@ -1,17 +1,31 @@
 <!-- simple registration template -->
-<div class="form-horizontal col-lg-6">
+<div class="form-horizontal col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <form>
         <div class="form-group">
+            <label for="userName">Image url</label>
+            <input ng-model="regUser.userImageUrl" type="text" class="form-control" id="userName" placeholder="URL" required>
+        </div>
+        <div class="form-group">
             <label for="userName">User Name</label>
-            <input ng-model="regUser.userName" type="text" class="form-control" id="userName" placeholder="User Name">
+            <input ng-model="regUser.userName" type="text" class="form-control" id="userName" placeholder="User Name" required>
+        </div>
+        <div class="dropdown form-group">
+            <label for="exampleInputEmail1">Theme color</label>
+            <select ng-model="regUser.userThemeColor" class="form-control" required>
+                <option value="defult">Defult</option>
+                <option value="green">Green</option>
+                <option value="black">Black</option>
+                <option value="blue">Blue</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
-            <input ng-model="regUser.userEmail" type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+            <input ng-model="regUser.userEmail" type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" required>
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
-            <input ng-model="regUser.userPassword" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <input ng-model="regUser.userPassword" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"
+            required>
         </div>
         <button ng-click="registrate()" type="submit" class="btn btn-default">Submit</button>
     </form>
