@@ -1,0 +1,18 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <div class="form-group">
+        <label for="exampleInputEmail1">Email address to send</label>
+        <input ng-model="emailToSend" type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" required>
+    </div>
+    <button ng-click="takeSnapshot()" type="submit" class="btn btn-default">Submit</button>
+    <label class="switch">Virtual Machines
+        <input ng-model="showVirtualMachines" type="checkbox"><i></i>
+    </label>
+    <label class="switch">Top Falied Apis
+        <input  ng-model="showTopFailedApi" type="checkbox"><i></i>
+    </label>
+    <label class="switch">Responce Matric
+        <input ng-model="showResponceMatric" type="checkbox"><i></i>
+    </label>
+</div>
+<responce-matric ng-show="showResponceMatric"></responce-matric>
+<top-failed-api ng-show="showTopFailedApi"></top-failed-api>

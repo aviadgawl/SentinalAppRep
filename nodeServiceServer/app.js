@@ -5,12 +5,17 @@ var Firebase = require('firebase');// firebase DB.
 var http = require('http');//for making http req.
 var smtpSettings = require('./fixtures/smtp_settings.json');
 var emailjs = require('emailjs');
+var request = require('request');
+var needle = require('needle');
 
 var app = express();
 var rootRef = new Firebase('https://burning-heat-1811.firebaseio.com/');
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(bodyParser.json());
+
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb' }));
 
 //for alwoing cross origin requests.
 app.use(function (req, res, next) {
@@ -98,23 +103,76 @@ function createNewProfile(userProfileParam) {
 
 //=============================================  Server REST Functions ====================================================
 
+
 app.post('/snapshot', function (req, res) {
-  var smtp = emailjs(smtpSettings).send({
-    subject : 'Here is your snapshot',
-    text : 'Bla blabla',
-    from : 'Aviad <aviadgawl@gmail.com>',
-    to : 'Someone <someone@someone.com>',
-    attachment : [
-      {
-        path: req.image.path,
-        type: req.image.type,
-        name: req.image.name
-      }
-    ]
-  }, function (e,r) {
-    console.log(e||r);
-  });
+    var base64 = req.body.userInfo.image,
+        tmpfile = require('os').tmpDir() + '/' + require('process').hrtime()[1] + '.' + Math.round(Math.random() * 999999) + '.png';
+    var emailToSend = req.body.userInfo.email;
+    var userToken = req.body.userInfo.token;
+
+    rootRef.authWithCustomToken(userToken, function (error, authData) {
+
+        if (error) {
+            console.log(error);
+            res.status(500);
+            res.send('Firebase Error!');
+            res.end();
+        } else {
+            base64 = base64.replace(/^data:image\/png;base64,/, "");
+            require("fs").writeFile(tmpfile, base64, 'base64', function (err) {
+
+                emailjs.server.connect(smtpSettings).send({
+                    subject: 'Here is your snapshot',
+                    text: 'Your chosen snapshot',
+                    from: 'Aviad Apps <aviadapps@gmail.com>',
+                    to: 'User < ' + emailToSend + ' >',
+                    attachment: [
+                        {
+                            path: tmpfile,
+                            type: 'image/png',
+                            name: 'Screenshot.png'
+                        }
+                    ]
+                }, function (e, r) {
+                    require('fs').unlink(tmpfile);
+                });
+            });
+
+            console.log(authData);
+            res.send('email is sent');
+            res.end();
+        }
+    });
+
+
+
 });
+
+/*app.post('/snapshot', function (req, res) {
+    var base64 = req.body.userInfo.image64,
+        tmpfile = require('os').tmpDir() + '/' + require('process').hrtime()[1] + '.' + Math.round(Math.random() * 999999) + '.png';
+    
+    base64 = base64.replace(/^data:image\/png;base64,/, "");
+    require("fs").writeFile(tmpfile, base64, 'base64', function(err) {
+        
+        emailjs.server.connect(smtpSettings).send({
+            subject : 'Here is your snapshot',
+            text : 'Your chosen snapshot',
+            from : 'Aviad Apps <aviadapps@gmail.com>',
+            to : 'Aviad Shua <aviadgawl@gmail.com>',
+            attachment : [
+            {
+                path: tmpfile,
+                type: 'image/png',
+                name: 'Screenshot.png'
+            }
+            ]
+        }, function (e,r) {
+            require('fs').unlink(tmpfile);
+        });
+    });
+    
+});*/
 
 // example: get method.
 app.get('/', function (req, res) {
@@ -125,7 +183,19 @@ app.get('/', function (req, res) {
 app.post('/login', function (req, res) {
     var userAsJSON = req.body.userInfo;
     var userAsObject = JSON.parse(userAsJSON);
-
+    var userProfile;
+    
+     rootRef.child('users').once("value", function(snapshot) {
+            snapshot.forEach(function(childSnapshot) {
+            var key = childSnapshot.key();
+            var childData = childSnapshot.val();
+            if(childData.userEmail == userAsObject.userEmail){
+                userProfile = childData;
+                console.log(childData.userEmail);
+            }
+                });
+            });
+    
     authWithPassword(userAsObject, function (error, authData) {
         var message = null;
 
@@ -134,13 +204,12 @@ app.post('/login', function (req, res) {
             res.send('Firebase Error!');
             res.end();
         } else {
-            console.log("Successfully Entered user account");
-            //var temp = rootRef.child("users").orderByChild("userEmail").startAt(userAsObject.userEmail);
-            { }//trying to get a user from mt data base.
+          
+            
             message = authData.token;
         }
 
-        res.send(message);
+        res.send({profile:userProfile , token: message});
     });
 });
 // refistrations post method.
@@ -377,7 +446,8 @@ app.post('/allTopfaliedApi', function (clientReq, clientRes) {
 ////top failed api chart data.
 app.post('/topfaliedApiData', function (clientReq, clientRes) {
     var userToken = clientReq.body.userInfo.token;
-    var userQuary = clientReq.body.userInfo.quary;
+    var payload = { 'services': 'all', 'duration': 2, 'top': 2 }; //clientReq.body.userInfo.quary;
+    
     rootRef.authWithCustomToken(userToken, function (error, authData) {
 
         if (error) {
@@ -386,9 +456,32 @@ app.post('/topfaliedApiData', function (clientReq, clientRes) {
             clientRes.send('Firebase Error!');
             clientRes.end();
         } else {
-            console.log('message form firebase' + authData);
+            console.log('message form firebase' + authData.data);
 
-            http.post('http://diamondsmock2.azurewebsites.net/Apis/Failed', userQuary, (serviceRes) => {
+            needle.post('http://diamondsmock2.azurewebsites.net/Apis/Failed', payload,
+                function (err, resp, body) {
+                    console.log('this is the body ' + body);
+                    console.log('this is the responce ' + resp);
+                    console.log('this is the error ' + err);
+
+                    {}
+                });
+            
+            /*request.post(
+                'http://diamondsmock2.azurewebsites.net/Apis/Failed',
+                { userQuary },
+                function (error, response, body) {
+                    if (!error && response.statusCode == 200) {
+                        console.log(body + " " + response.statusCode)
+                    }
+                    
+                    if(error){
+                        console.log(error.data);
+                    }
+                }
+                );*/
+
+            /*http.post('http://diamondsmock2.azurewebsites.net/Apis/Failed', userQuary, (serviceRes) => {
                 // consume response body
                 var data = '';
                 serviceRes.on('data', (resData) => {
@@ -407,7 +500,7 @@ app.post('/topfaliedApiData', function (clientReq, clientRes) {
                 clientRes.status(500);
                 clientRes.send('Diamond Mock Error!');
                 clientRes.end();
-            });
+            });*/
         }
     });
 

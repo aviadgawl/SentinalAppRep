@@ -21,10 +21,10 @@ sentinalApp.directive('login', function (loginService, localStorageService) {
 
                         if (res) {
                             self.onlineUser.isLogged = true;
-                            //self.globalClientKey = self.onlineUser.userEmail;
-                            localStorageService.add(self.globalClientKey, res.data);
-                            
+                            localStorageService.add(self.globalClientKey, res.data.token);
+                            localStorageService.add(self.globalUserKey, JSON.stringify(res.data.profile));
                             console.log(res)
+                            debugger
                         }
                         else {
                             alert('Login failed!')
@@ -133,6 +133,7 @@ sentinalApp.directive('login', function (loginService, localStorageService) {
                 self.onlineUser.userEmail = '';
                 self.onlineUser.userPassword = '';
                 localStorageService.remove(self.globalClientKey);
+                localStorageService.remove(self.globalUserKey);
             }//end of logout.
             
         },// end of link.

@@ -2,13 +2,16 @@ sentinalApp.directive('topFailedApi', function (topFailedApiService, localStorag
     return {
         restrict: 'EA',
         controller: 'mainCtrl',
-        link: function (scope) {
+        link: function (scope , element) {
             var self = scope;
+            self.test = {
+                item:[]
+            };
             self.data = '';
             self.serviceToDisp = [];
             self.serverNames = [];
             self.apisNames = [];
-            self.quary = null;
+            self.quary = '';
             self.mainChartHeader = document.getElementById('mainFailedChartHeader');
             self.mainChartCanvas = document.getElementById('mainFailedChartCanvas');
             self.mainCanvasContext = self.mainChartCanvas.getContext('2d');
@@ -41,7 +44,22 @@ sentinalApp.directive('topFailedApi', function (topFailedApiService, localStorag
                   
                 }
             }
-
+            
+            self.onClick = function(){
+                for (var i = 0; i < self.test.services.length; i++) {
+                    makeTheSame(self.test.services[i].apis , self.test.apis); 
+                }
+                debugger
+                //{ 'services': [{ 'serverName': string, 'apis': [ string ] }], 'duration': int(minutes), 'top': (int?) }
+                 topFailedApiService.getTopFaliedApi(localStorageService.get(self.globalClientKey) ,
+                  JSON.stringify(new TFAQuary(self.test.services ,self.quary.duration , self.quary.top))).then(function(res){
+                     
+                 } , function(error){
+                     alert('server error:' + error.data + " | " + error.status);
+                 });
+                debugger
+            }
+            
             topFailedApiService.getAllTopFaliedApi(localStorageService.get(self.globalClientKey)).then(function (res) {
                 self.data = res.data;
             }, function (error) {
@@ -49,11 +67,7 @@ sentinalApp.directive('topFailedApi', function (topFailedApiService, localStorag
             });
             
             self.getChartData = function(){
-                 topFailedApiService.getTopFaliedApi(localStorageService.get(self.globalClientKey) , self.quary).then(function(res){
-                     
-                 } , function(error){
-                     alert('server error:' + error.data + " | " + error.status);
-                 });
+                
             }
             //============================================================================================================================            
             var data = {
@@ -131,6 +145,17 @@ function arrayRemoveValue(valueParam , arrayParam) {
     for (var index = 0; index < arrayParam.length; index++) {
         if(arrayParam[index] == valueParam){
              arrayParam.splice(index, 1);
+        }
+        
+    }
+}
+
+function makeTheSame(arrayTarget , arrayExample){
+    for (var i = 0; i < arrayExample.length; i++) {
+        for (var j = 0; j < arrayTarget.length; j++) {
+            if(arrayExample[i] != arrayTarget[j]){
+                arrayRemoveValue(arrayTarget[j] , arrayTarget);
+            }
         }
         
     }

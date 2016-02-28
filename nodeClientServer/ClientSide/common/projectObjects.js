@@ -202,12 +202,12 @@ function sumAllStatusCode(infoArrayParam, dur50, dur2000, dur5000) {
 }//end of aggragtions function.
 
 //top failed apis quary!
-function TFAQuary() {//{ 'services': 'all', 'duration': int(minutes), 'top': (int?) }
+function TFAQuary(servicesParam , durationParam , topParam) {//{ 'services': 'all', 'duration': int(minutes), 'top': (int?) }
     var self = this;
     
     self.services = servicesParam;
     
-    self.duration = durParam;
+    self.duration = durationParam;
     
     self.top = topParam;
 }

@@ -15,7 +15,7 @@ sentinalApp.service('topFailedApiService', function ($http, $q) {
         return deferred.promise;
     }
     
-    self.getTopFaliedApiData = function (userTokenParam , userQuaryParam) {
+    self.getTopFaliedApi = function (userTokenParam , userQuaryParam) {
         var deferred = $q.defer();
 
         return $http.post('http://localhost:4000/topfaliedApiData', { userInfo: { token: userTokenParam , quary:userQuaryParam} }).

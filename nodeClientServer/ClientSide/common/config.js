@@ -1,4 +1,4 @@
-var sentinalApp = angular.module('sentinalApp', ['ngRoute', 'angular-loading-bar']).config(['$routeProvider',
+var sentinalApp = angular.module('sentinalApp', ['ngRoute', 'angular-loading-bar' , 'checklist-model']).config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider.
             when('/registrate', {
@@ -19,11 +19,16 @@ var sentinalApp = angular.module('sentinalApp', ['ngRoute', 'angular-loading-bar
             when('/profile', {
                 template: '<profile></profile>'
             }).
+            when('/snapshot', {
+                template: '<snapshot></snapshot>'
+            }).
             otherwise({
                 redirectTo: '/'
             });
     }]).controller('mainCtrl', function ($scope) {
         $scope.globalClientKey = "19238jd94h19239dn393i";
+        
+        $scope.globalUserKey = '3123123123123442';
     }).run(function ($rootScope) {
 
 

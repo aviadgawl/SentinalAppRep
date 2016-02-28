@@ -6,7 +6,7 @@
 
             </div>
             <div class="avatar">
-                <img alt="" src="http://lorempixel.com/100/100/people/9/">
+                <img alt="" src="{{onlineUser.userImageUrl}}">
             </div>
             <div class="info">
                 <div class="title">
@@ -14,7 +14,7 @@
                 </div>
                 <div class="desc">Email: {{onlineUser.userEmail}}</div>
                 <div class="desc">Name: {{onlineUser.userName}}</div>
-                <div class="desc">Theme Color:</div>
+                <div class="desc">Theme Color: {{onlineUser.userThemeColor}}</div>
                 <div class="desc"><input ng-model="oldPassword" type="password"  placeholder="old password"></div>
                 <div class="desc"> <input ng-model="newPassword" type="password"  placeholder="new password"></div>
                 <div class="desc"><input ng-click="changePassword()" type="button" value="Change"></div>
